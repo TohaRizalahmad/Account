@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="id">
 
 <head>
@@ -472,49 +472,55 @@
     @media (max-width: 560px) {
       body {
         padding-block: 28px 42px;
-        padding-left: max(14px, env(safe-area-inset-left, 0px));
-        padding-right: max(14px, env(safe-area-inset-right, 0px));
+        padding-left: max(12px, env(safe-area-inset-left, 0px));
+        padding-right: max(12px, env(safe-area-inset-right, 0px));
       }
 
       .section {
-        gap: 20px;
+        gap: 22px;
       }
 
       .topbar {
-        padding-bottom: 16px;
+        grid-template-columns: 44px 1fr 44px;
+        padding-bottom: 18px;
+      }
+
+      .topbar svg {
+        width: 28px;
+        height: 28px;
       }
 
       .tb-title {
-        font-size: 17.5px;
+        font-size: 21px;
       }
 
       .tb-handle {
-        font-size: 13px;
+        font-size: 14.5px;
       }
 
       .banner {
-        height: 112px;
+        height: 132px;
       }
 
       .p-body {
-        padding: 4px 18px 20px;
+        padding: 4px 18px 22px;
         gap: 16px;
-        margin-top: -26px;
+        margin-top: -30px;
       }
 
       .avatar {
-        width: 80px;
-        height: 80px;
-        border-radius: 18px;
+        width: 96px;
+        height: 96px;
+        border-radius: 20px;
       }
 
       .p-name {
-        font-size: 21px;
-        margin-top: 22px;
+        font-size: 24px;
+        margin-top: 24px;
       }
 
       .p-handle {
-        font-size: 14.5px;
+        font-size: 16px;
       }
 
       .soc-grid {
@@ -522,38 +528,47 @@
       }
 
       .soc-card {
-        padding: 18px 15px;
-        min-height: 112px;
-        border-radius: 16px;
-        gap: 7px;
+        padding: 20px 16px;
+        min-height: 134px;
+        border-radius: 18px;
+        gap: 8px;
+      }
+
+      .soc-card.soc-full {
+        min-height: 118px;
       }
 
       .soc-title {
-        font-size: 16px;
+        font-size: 18.5px;
         font-weight: 700;
         padding-right: 0;
-        padding-top: 50px;
+        padding-top: 58px;
         margin-bottom: 0;
       }
 
       .soc-btn {
-        font-size: 0.82rem;
-        padding: 6.5px 12px;
+        font-size: 0.95rem;
+        padding: 8px 14px;
       }
 
       .soc-brand-icon {
-        width: 42px;
-        height: 42px;
+        width: 48px;
+        height: 48px;
         right: auto;
-        left: 14px;
-        top: 14px;
+        left: 16px;
+        top: 16px;
         transform: none;
-        border-radius: 11px;
+        border-radius: 13px;
       }
 
       .soc-brand-icon svg {
-        width: 22px;
-        height: 22px;
+        width: 26px;
+        height: 26px;
+      }
+
+      .soc-brand-icon img {
+        width: 32px !important;
+        height: 32px !important;
       }
 
       .soc-card:hover .soc-brand-icon {
@@ -562,35 +577,35 @@
 
       .soc-card.soc-full .soc-title {
         padding-top: 0;
-        padding-right: 60px;
+        padding-right: 68px;
       }
 
       .copy-row {
-        padding-right: 56px;
-        gap: 8px;
+        padding-right: 64px;
+        gap: 10px;
       }
 
       .copy {
-        font-size: 0.8rem;
-        padding: 6.5px 12px;
+        font-size: 0.95rem;
+        padding: 8px 14px;
       }
 
       .game-id {
         padding-right: 0;
-        font-size: 0.86rem;
+        font-size: 1rem;
       }
 
       .addr {
-        font-size: 0.94rem;
+        font-size: clamp(0.78rem, 3.7vw, 0.95rem);
       }
 
       .tag {
-        font-size: 11.5px;
+        font-size: 13px;
       }
 
       .soc-card.soc-full .soc-brand-icon {
         left: auto;
-        right: 14px;
+        right: 16px;
         top: 50%;
         transform: translateY(-50%);
       }
@@ -630,9 +645,7 @@
 
   <section class="section">
     <div class="topbar">
-      <svg viewBox="0 0 24 24" aria-hidden="true">
-        <path d="M3 6h18M3 12h18M3 18h18" />
-      </svg>
+      <span></span>
       <div>
         <div class="tb-title">Account</div>
         <div class="tb-handle">@Toha.Rizalahmad_</div>
@@ -777,7 +790,7 @@
         <div class="soc-title">PUBG Mobile</div>
         <div class="game-id">ID: <span class="id-text">52431517177</span></div>
         <div class="btn-row">
-          <button class="copy" type="button" data-copy="0000000000">Salin ID</button>
+          <button class="copy" type="button" data-copy="52431517177">Salin ID</button>
           <a class="copy" href="https://zanstore.com/" target="_blank" rel="noopener noreferrer">Gift UC ↗</a>
         </div>
         <div class="soc-brand-icon"><img src="img/PUBG.jpg" alt=""
@@ -787,7 +800,7 @@
         <div class="soc-title">Mobile Legends</div>
         <div class="game-id">ID: <span class="id-text">424060288 (3889)</span></div>
         <div class="btn-row">
-          <button class="copy" type="button" data-copy="0000000000">Salin ID</button>
+          <button class="copy" type="button" data-copy="424060288 (3889)">Salin ID</button>
           <a class="copy" href="https://zanstore.com/" target="_blank" rel="noopener noreferrer">Gift Diamond ↗</a>
         </div>
         <div class="soc-brand-icon"><img src="img/MOBILE LEGENDS.jpg" alt=""
