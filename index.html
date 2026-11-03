@@ -11,6 +11,8 @@
   <style>
     /* Layout: kolom tengah, judul bagian, grid kartu gradasi 2 kolom dengan kartu email selebar penuh; latar gelap dengan orb yang melayang pelan */
     :root {
+      -webkit-text-size-adjust: 100%;
+      text-size-adjust: 100%;
       --bg: #070b14;
       --surface: #0d1422;
       --line: rgba(255, 255, 255, 0.09);
@@ -469,81 +471,89 @@
 
     @media (max-width: 560px) {
       body {
-        padding-block: 24px 36px;
+        padding-block: 28px 42px;
         padding-left: max(14px, env(safe-area-inset-left, 0px));
         padding-right: max(14px, env(safe-area-inset-right, 0px));
       }
 
       .section {
-        gap: 18px;
+        gap: 20px;
       }
 
       .topbar {
-        padding-bottom: 14px;
+        padding-bottom: 16px;
       }
 
       .tb-title {
-        font-size: 16px;
+        font-size: 17.5px;
+      }
+
+      .tb-handle {
+        font-size: 13px;
       }
 
       .banner {
-        height: 96px;
+        height: 112px;
       }
 
       .p-body {
-        padding: 4px 16px 18px;
-        gap: 14px;
-        margin-top: -24px;
+        padding: 4px 18px 20px;
+        gap: 16px;
+        margin-top: -26px;
       }
 
       .avatar {
-        width: 72px;
-        height: 72px;
-        border-radius: 16px;
+        width: 80px;
+        height: 80px;
+        border-radius: 18px;
       }
 
       .p-name {
-        font-size: 19px;
-        margin-top: 20px;
+        font-size: 21px;
+        margin-top: 22px;
+      }
+
+      .p-handle {
+        font-size: 14.5px;
       }
 
       .soc-grid {
-        gap: 10px;
+        gap: 12px;
       }
 
       .soc-card {
-        padding: 16px 14px;
-        min-height: 106px;
-        border-radius: 14px;
-        gap: 6px;
+        padding: 18px 15px;
+        min-height: 112px;
+        border-radius: 16px;
+        gap: 7px;
       }
 
       .soc-title {
-        font-size: 15px;
+        font-size: 16px;
         font-weight: 700;
         padding-right: 0;
-        padding-top: 48px;
+        padding-top: 50px;
         margin-bottom: 0;
       }
 
       .soc-btn {
-        font-size: 0.78rem;
-        padding: 6px 12px;
+        font-size: 0.82rem;
+        padding: 6.5px 12px;
       }
 
       .soc-brand-icon {
-        width: 38px;
-        height: 38px;
+        width: 42px;
+        height: 42px;
         right: auto;
         left: 14px;
         top: 14px;
         transform: none;
-        border-radius: 10px;
+        border-radius: 11px;
       }
 
       .soc-brand-icon svg {
-        width: 20px;
-        height: 20px;
+        width: 22px;
+        height: 22px;
       }
 
       .soc-card:hover .soc-brand-icon {
@@ -552,26 +562,30 @@
 
       .soc-card.soc-full .soc-title {
         padding-top: 0;
-        padding-right: 56px;
+        padding-right: 60px;
       }
 
       .copy-row {
-        padding-right: 52px;
+        padding-right: 56px;
         gap: 8px;
       }
 
       .copy {
-        font-size: 0.76rem;
-        padding: 6px 12px;
+        font-size: 0.8rem;
+        padding: 6.5px 12px;
       }
 
       .game-id {
         padding-right: 0;
-        font-size: 0.82rem;
+        font-size: 0.86rem;
+      }
+
+      .addr {
+        font-size: 0.94rem;
       }
 
       .tag {
-        font-size: 11px;
+        font-size: 11.5px;
       }
 
       .soc-card.soc-full .soc-brand-icon {
