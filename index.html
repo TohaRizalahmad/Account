@@ -121,7 +121,6 @@
       display: flex;
       flex-direction: column;
       gap: 24px;
-      animation: si .32s cubic-bezier(.4, 0, .2, 1);
     }
 
     @keyframes si {
@@ -260,13 +259,22 @@
       min-height: 110px;
     }
 
-    .soc-card:hover {
-      transform: translateY(-4px) scale(1.01);
-      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.16), 0 20px 50px rgba(0, 0, 0, 0.55);
+    /* Efek hover hanya untuk perangkat dengan mouse. Di HP, :hover "menempel" setelah
+       disentuh sehingga kartu tidak kembali normal saat pengguna kembali ke halaman. */
+    @media (hover: hover) and (pointer: fine) {
+      .soc-card:hover {
+        transform: translateY(-4px) scale(1.01);
+        box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.16), 0 20px 50px rgba(0, 0, 0, 0.55);
+      }
+
+      .soc-card:hover .soc-brand-icon {
+        transform: translateY(-50%) rotate(-6deg) scale(1.1);
+      }
     }
 
-    .soc-card:hover .soc-brand-icon {
-      transform: translateY(-50%) rotate(-6deg) scale(1.1);
+    /* Umpan balik sentuhan: hanya aktif selama jari menekan, lalu kembali sendiri */
+    .soc-card:active {
+      transform: scale(0.98);
     }
 
     .soc-card:focus-visible {
@@ -276,6 +284,16 @@
 
     .c-spotify {
       background: linear-gradient(135deg, #1aa34a 0%, #0b4a24 60%, #06180e 100%);
+    }
+
+    .grid-title {
+      grid-column: 1 / -1;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin: -2px 0 -2px 2px;
     }
 
     .divider {
@@ -405,9 +423,11 @@
       transition: background .2s, border-color .2s;
     }
 
-    .soc-card:hover .soc-btn {
-      background: rgba(255, 255, 255, 0.26);
-      border-color: rgba(255, 255, 255, 0.5);
+    @media (hover: hover) and (pointer: fine) {
+      .soc-card:hover .soc-btn {
+        background: rgba(255, 255, 255, 0.26);
+        border-color: rgba(255, 255, 255, 0.5);
+      }
     }
 
     .soc-brand-icon {
@@ -452,8 +472,10 @@
       padding: 7px 14px;
     }
 
-    .copy:hover {
-      background: rgba(255, 255, 255, 0.26);
+    @media (hover: hover) and (pointer: fine) {
+      .copy:hover {
+        background: rgba(255, 255, 255, 0.26);
+      }
     }
 
     .copy:focus-visible {
@@ -482,11 +504,157 @@
       }
 
       .soc-card:hover,
+      .soc-card:active,
       .soc-card:hover .soc-brand-icon {
         transform: none;
       }
     }
+
+    /* ===== Animasi masuk & animasi saat halaman dibuka =====
+       Semua memakai animation-fill-mode "backwards" supaya setelah selesai,
+       transform kartu kembali dikendalikan efek hover/tekan seperti biasa. */
+    .topbar {
+      animation: fadeDown .7s cubic-bezier(.22, 1, .36, 1) backwards;
+    }
+
+    .profile {
+      animation: rise .8s cubic-bezier(.22, 1, .36, 1) .12s backwards;
+    }
+
+    .banner {
+      animation: bannerZoom 1.6s cubic-bezier(.22, 1, .36, 1) .12s backwards;
+    }
+
+    .avatar {
+      animation:
+        pop .8s cubic-bezier(.34, 1.56, .64, 1) .4s backwards,
+        ring 3.2s ease-out 1.4s infinite;
+    }
+
+    .p-name,
+    .p-handle {
+      animation: fadeUp .7s cubic-bezier(.22, 1, .36, 1) .6s backwards;
+    }
+
+    .p-handle {
+      animation-delay: .72s;
+    }
+
+    /* Kartu & judul muncul bergantian, dan yang di bawah muncul saat di-scroll */
+    .js .reveal:not(.in) {
+      opacity: 0;
+    }
+
+    .reveal.in {
+      animation: rise .65s cubic-bezier(.22, 1, .36, 1) var(--d, 0ms) backwards;
+    }
+
+    /* Kilau cahaya tipis yang lewat pelan di tiap kartu */
+    .soc-card::after,
+    .soc-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      transform: translateX(-130%) skewX(-18deg);
+    }
+
+    /* Kilau utama: lebar dan terang */
+    .soc-card::after {
+      background: linear-gradient(105deg, transparent 30%, rgba(255, 255, 255, 0.30) 50%, transparent 70%);
+      animation: sheen var(--sp, 5s) ease-in-out infinite;
+      animation-delay: var(--sd, 1.5s);
+    }
+
+    /* Kilau kedua: garis tipis yang menyusul sedikit di belakang */
+    .soc-card::before {
+      background: linear-gradient(105deg, transparent 44%, rgba(255, 255, 255, 0.42) 50%, transparent 56%);
+      animation: sheen var(--sp, 5s) ease-in-out infinite;
+      animation-delay: calc(var(--sd, 1.5s) + .3s);
+    }
+
+    @keyframes fadeDown {
+      from {
+        opacity: 0;
+        transform: translateY(-14px);
+      }
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+    }
+
+    @keyframes rise {
+      from {
+        opacity: 0;
+        transform: translateY(26px) scale(.98);
+      }
+    }
+
+    @keyframes bannerZoom {
+      from {
+        transform: scale(1.18);
+      }
+    }
+
+    @keyframes pop {
+      from {
+        opacity: 0;
+        transform: scale(.55) rotate(-6deg);
+      }
+    }
+
+    @keyframes ring {
+      0% {
+        box-shadow: 0 0 0 1px var(--line), 0 0 0 0 rgba(167, 139, 250, .45);
+      }
+
+      70%,
+      100% {
+        box-shadow: 0 0 0 1px var(--line), 0 0 0 16px rgba(167, 139, 250, 0);
+      }
+    }
+
+    @keyframes sheen {
+      0% {
+        transform: translateX(-130%) skewX(-18deg);
+      }
+
+      30%,
+      100% {
+        transform: translateX(130%) skewX(-18deg);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .js .reveal:not(.in) {
+        opacity: 1;
+      }
+
+      .topbar,
+      .profile,
+      .banner,
+      .avatar,
+      .p-name,
+      .p-handle,
+      .reveal.in,
+      .soc-card::after,
+      .soc-card::before {
+        animation: none;
+      }
+
+      .soc-card::after,
+      .soc-card::before {
+        display: none;
+      }
+    }
   </style>
+  <script>
+    document.documentElement.className += " js";
+  </script>
   <script>
     /* Di HP, tampilan desktop dipakai apa adanya lalu diskalakan seragam agar pas lebar layar.
        Ubah LEBAR (px) untuk mengatur ukuran tulisan: makin kecil angkanya, makin besar tulisannya. */
@@ -536,6 +704,8 @@
     </div>
 
     <div class="soc-grid">
+      <hr class="divider">
+      <div class="grid-title">Sosial</div>
       <a class="soc-card soc-full c-spotify"
         href="https://open.spotify.com/user/31fralpy6tqe4ytdth2mb6sfc7oe?si=vFanV0L1RQO3xBjY6SSjmA&utm_source=copy-link"
         target="_blank" rel="noopener noreferrer">
@@ -629,6 +799,7 @@
           </svg></div>
       </a>
       <hr class="divider">
+      <div class="grid-title">Toko</div>
       <a class="soc-card soc-full c-shop" href="https://lynk.id/toharizalahmad" target="_blank"
         rel="noopener noreferrer">
         <div class="soc-title">Shop With Me</div>
@@ -640,6 +811,7 @@
           </svg></div>
       </a>
       <hr class="divider">
+      <div class="grid-title">Gaming</div>
       <a class="soc-card soc-full c-steam" href="https://steamcommunity.com/profiles/76561198713709762/" target="_blank"
         rel="noopener noreferrer">
         <div class="soc-title">Play With Me</div>
@@ -658,6 +830,8 @@
               d="M3.537 0C2.165 0 1.66.506 1.66 1.879V18.44a4.262 4.262 0 00.02.433c.031.3.037.59.316.92.027.033.311.245.311.245.153.075.258.13.43.2l8.335 3.491c.433.199.614.276.928.27h.002c.314.006.495-.071.928-.27l8.335-3.492c.172-.07.277-.124.43-.2 0 0 .284-.211.311-.243.28-.33.285-.621.316-.92a4.261 4.261 0 00.02-.434V1.879c0-1.373-.506-1.88-1.878-1.88zm13.366 3.11h.68c1.138 0 1.688.553 1.688 1.696v1.88h-1.374v-1.8c0-.369-.17-.54-.523-.54h-.235c-.367 0-.537.17-.537.539v5.81c0 .369.17.54.537.54h.262c.353 0 .523-.171.523-.54V8.619h1.373v2.143c0 1.144-.562 1.71-1.7 1.71h-.694c-1.138 0-1.7-.566-1.7-1.71V4.82c0-1.144.562-1.709 1.7-1.709zm-12.186.08h3.114v1.274H6.117v2.603h1.648v1.275H6.117v2.774h1.74v1.275h-3.14zm3.816 0h2.198c1.138 0 1.7.564 1.7 1.708v2.445c0 1.144-.562 1.71-1.7 1.71h-.799v3.338h-1.4zm4.53 0h1.4v9.201h-1.4zm-3.13 1.235v3.392h.575c.354 0 .523-.171.523-.54V4.965c0-.368-.17-.54-.523-.54zm-3.74 10.147a1.708 1.708 0 01.591.108 1.745 1.745 0 01.49.299l-.452.546a1.247 1.247 0 00-.308-.195.91.91 0 00-.363-.068.658.658 0 00-.28.06.703.703 0 00-.224.163.783.783 0 00-.151.243.799.799 0 00-.056.299v.008a.852.852 0 00.056.31.7.7 0 00.157.245.736.736 0 00.238.16.774.774 0 00.303.058.79.79 0 00.445-.116v-.339h-.548v-.565H7.37v1.255a2.019 2.019 0 01-.524.307 1.789 1.789 0 01-.683.123 1.642 1.642 0 01-.602-.107 1.46 1.46 0 01-.478-.3 1.371 1.371 0 01-.318-.455 1.438 1.438 0 01-.115-.58v-.008a1.426 1.426 0 01.113-.57 1.449 1.449 0 01.312-.46 1.418 1.418 0 01.474-.309 1.58 1.58 0 01.598-.111 1.708 1.708 0 01.045 0zm11.963.008a2.006 2.006 0 01.612.094 1.61 1.61 0 01.507.277l-.386.546a1.562 1.562 0 00-.39-.205 1.178 1.178 0 00-.388-.07.347.347 0 00-.208.052.154.154 0 00-.07.127v.008a.158.158 0 00.022.084.198.198 0 00.076.066.831.831 0 00.147.06c.062.02.14.04.236.061a3.389 3.389 0 01.43.122 1.292 1.292 0 01.328.17.678.678 0 01.207.24.739.739 0 01.071.337v.008a.865.865 0 01-.081.382.82.82 0 01-.229.285 1.032 1.032 0 01-.353.18 1.606 1.606 0 01-.46.061 2.16 2.16 0 01-.71-.116 1.718 1.718 0 01-.593-.346l.43-.514c.277.223.578.335.9.335a.457.457 0 00.236-.05.157.157 0 00.082-.142v-.008a.15.15 0 00-.02-.077.204.204 0 00-.073-.066.753.753 0 00-.143-.062 2.45 2.45 0 00-.233-.062 5.036 5.036 0 01-.413-.113 1.26 1.26 0 01-.331-.16.72.72 0 01-.222-.243.73.73 0 01-.082-.36v-.008a.863.863 0 01.074-.359.794.794 0 01.214-.283 1.007 1.007 0 01.34-.185 1.423 1.423 0 01.448-.066 2.006 2.006 0 01.025 0zm-9.358.025h.742l1.183 2.81h-.825l-.203-.499H8.623l-.198.498h-.81zm2.197.02h.814l.663 1.08.663-1.08h.814v2.79h-.766v-1.602l-.711 1.091h-.016l-.707-1.083v1.593h-.754zm3.469 0h2.235v.658h-1.473v.422h1.334v.61h-1.334v.442h1.493v.658h-2.255zm-5.3.897l-.315.793h.624zm-1.145 5.19h8.014l-4.09 1.348z" />
           </svg></div>
       </a>
+      <hr class="divider">
+      <div class="grid-title">My Favorite Game</div>
       <div class="soc-card c-pubg">
         <div class="soc-title">PUBG Mobile</div>
         <div class="game-id">ID: <span class="id-text">52431517177</span></div>
@@ -679,6 +853,7 @@
             style="width:28px;height:28px;object-fit:contain;border-radius:6px;"></div>
       </div>
       <hr class="divider">
+      <div class="grid-title">Dukungan</div>
       <a class="soc-card soc-full c-saweria" href="https://saweria.co/TohaRizalahmad" target="_blank"
         rel="noopener noreferrer">
         <div class="soc-title">Support via Saweria</div>
@@ -696,6 +871,41 @@
     </div>
   </section>
 
+  <script>
+    /* Munculkan kartu bergantian saat halaman dibuka, dan saat masuk ke layar ketika di-scroll */
+    (function () {
+      var items = document.querySelectorAll(".soc-grid > *");
+      items.forEach(function (el, i) {
+        el.classList.add("reveal");
+        el.style.setProperty("--i", i);
+        /* Kilau tiap kartu berdiri sendiri: jeda awal & lama putaran dibuat berbeda,
+           sehingga kartu yang bersebelahan tidak pernah berkilau serempak. */
+        el.style.setProperty("--sd", (1.2 + ((i * 0.618) % 1) * 5).toFixed(2) + "s");
+        el.style.setProperty("--sp", (4.2 + ((i * 0.382) % 1) * 2.8).toFixed(2) + "s");
+      });
+      if (!("IntersectionObserver" in window)) {
+        items.forEach(function (el) { el.classList.add("in"); });
+        return;
+      }
+      var io = new IntersectionObserver(function (entries) {
+        var n = 0;
+        entries.forEach(function (e) {
+          if (!e.isIntersecting) return;
+          e.target.style.setProperty("--d", Math.min(n++ * 80, 720) + "ms");
+          e.target.classList.add("in");
+          io.unobserve(e.target);
+        });
+      }, { threshold: 0.12, rootMargin: "0px 0px -6% 0px" });
+      items.forEach(function (el) { io.observe(el); });
+    })();
+  </script>
+  <script>
+    window.addEventListener("pageshow", function (e) {
+      if (e.persisted && document.activeElement && document.activeElement.blur) {
+        document.activeElement.blur();
+      }
+    });
+  </script>
   <script>
     var btn = document.getElementById("copy");
     btn.addEventListener("click", function () {
